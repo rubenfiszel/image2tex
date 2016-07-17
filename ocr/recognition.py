@@ -14,21 +14,33 @@ def read_img(filename):
     _, contours,_ = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
 
     samples =  np.empty((0,100))
-
+    info_list = []
     for cnt in contours:
         [x,y,w,h] = cv2.boundingRect(cnt)
-
-        cv2.rectangle(im,(x,y),(x+w,y+h),(0,0,123), 4)
+        space = (x+w/2, y+h/2, w, h)
         roi = gray[y:y+h,x:x+w]
-        #    roismall = cv2.resize(roi,(10,10))
+        info_list.append((roi, space))
+        cv2.rectangle(im,(x,y),(x+w,y+h),(0,0,255), 2)
 
-    cv2.imshow('norm',im)
-    key = cv2.waitKey(0)
-    np.savetxt('symbol.data',samples)
+    return info_list
+
+def regulize(info_list):
+
+    regulized_info_list = []
+
+    for info in info_list:
+        ninfo = info
+        (roi, space) = ninfo
+        cv2.imshow('norm', roi)
+        cv2.waitKey()
+        regulized_info_list.append(ninfo)
+
+    return info_list
 
 
 def main():
-    read_img('example_text.png')
+    info_list = read_img('example_text.png')
+    regulized = regulize(info_list)
 
 if __name__ == "__main__":
     main()
