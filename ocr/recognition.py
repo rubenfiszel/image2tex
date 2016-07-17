@@ -1,34 +1,21 @@
-import numpy as np
-import cv2
+from read_img import read_img
 
-def read_img(filename):
-    im = cv2.imread(filename)
-    im3 = im.copy()
+def regulize(im_list):
+    return [im for im in im_list]
 
-    gray = cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)
-    blur = cv2.GaussianBlur(gray,(5,5),0)
-    thresh = cv2.adaptiveThreshold(blur,255,1,1,11,2)
+def nn_reco(im_list):
+    return ["A" for im in im_list]
 
-    #################      Now finding Contours         ###################
-
-    _, contours,_ = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
-
-    samples =  np.empty((0,100))
-
-    for cnt in contours:
-        [x,y,w,h] = cv2.boundingRect(cnt)
-
-        cv2.rectangle(im,(x,y),(x+w,y+h),(0,0,123), 4)
-        roi = gray[y:y+h,x:x+w]
-        #    roismall = cv2.resize(roi,(10,10))
-
-    cv2.imshow('norm',im)
-    key = cv2.waitKey(0)
-    np.savetxt('symbol.data',samples)
-
+def parse_with_dep(info_list):
+    return 1
 
 def main():
-    read_img('example_text.png')
+    (im_list, sp_list) = read_img('example_text.png')
+    regulized = regulize(im_list)
+    recognized = nn_reco(regulized)
+    nn_input = zip(recognized, sp_list)
+    tree = parse_with_dep(nn_input)
+    print nn_input
 
 if __name__ == "__main__":
     main()
