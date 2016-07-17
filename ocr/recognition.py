@@ -22,9 +22,9 @@ def read_img(filename):
         roi = gray[y:y+h,x:x+w]
         #    roismall = cv2.resize(roi,(10,10))
 
-        cv2.imshow('norm',im)
-        key = cv2.waitKey(0)
-        np.savetxt('symbol.data',samples)
+    cv2.imshow('norm',im)
+    key = cv2.waitKey(0)
+    np.savetxt('symbol.data',samples)
 
 
 def main():
