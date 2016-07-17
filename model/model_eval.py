@@ -3,7 +3,8 @@ import numpy as np
 import pickle
 
 
-def load_model(arch = 'model_architecture.json',
+def load_model(path = "model/",
+			   arch = 'model_architecture.json',
 			   weights = 'model_weights.h5',
 			   labels_pickle = 'labels.pkl'):
 	
@@ -17,9 +18,9 @@ def load_model(arch = 'model_architecture.json',
 	Returns:
 	    Keras model, Numpy array of labels
 	"""
-	model = model_from_json(open(arch).read())
-	model.load_weights(weights)
-	labels = np.array(pickle.load(open(labels_pickle)))
+	model = model_from_json(open(path + arch).read())
+	model.load_weights(path + weights)
+	labels = np.array(pickle.load(open(path + labels_pickle)))
 
 	return model, labels
 

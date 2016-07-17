@@ -21,7 +21,7 @@ import json
 
 
 
-def read_example_images(example_path = "../char2png/output/*.png", shape=(28,28)):
+def read_example_images(example_path = "char2png/output/*.png", shape=(28,28)):
     image_paths = glob.glob(example_path)
 
     image_array_list = []
