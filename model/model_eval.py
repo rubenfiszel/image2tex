@@ -25,12 +25,12 @@ def load_model(arch = 'model_architecture.json',
 
 
 
-def model_eval(input, model, labels):
+def model_eval(eval_images, model, labels):
 	
 	"""Summary: Evalute a numpy array through the model.
 	
 	Args:
-	    input (Numpy Array): Array with shape (batch_size, 1, 28, 28)
+	    eval_images (List of Numpy Array): List of arrays with shape (28,28) 
 	    model (Keras model): Loaded keras model from load_model()
 	    labels (Numpy Array): Array of labels from load_model
 	
@@ -38,7 +38,10 @@ def model_eval(input, model, labels):
 	    Numpy Array: Array of predicted labels.
 	"""
 
-	predictions = model.predict_classes(input, batch_size = len(input), verbose=0)
+	# Transform eval_images to (batch_size, 1, 28, 28)
+	eval_images = np.stack([image.reshape(1, 28, 28) for image in eval_images])
+
+	predictions = model.predict_classes(eval_images, batch_size = len(eval_images), verbose=0)
 	labeled_predictions = labels[predictions]
 
 	return labeled_predictions
