@@ -8,9 +8,12 @@ def pad_image(bitmap, extra_padding_percentage=10):
 
     extra_padding = int(max_dim * extra_padding_percentage / float(100))
 
+    resize_dimension  = ((max_dim - shape[0]) + extra_padding, (max_dim - shape[1]) + extra_padding)
+    print resize_dimension
+
     padded = np.pad(
         bitmap,
-        ((max_dim - shape[0]) + extra_padding,(max_dim - shape[1]) + extra_padding),
+        ((resize_dimension[0], resize_dimension[0]), (resize_dimension[1], resize_dimension[1])),
         mode='constant',
         constant_values=255
     )
@@ -32,7 +35,7 @@ def regularize_image(bitmap):
 i = 0
 def show(img):
 	global i
-	# imshow("image", resize(img (img.shape[0] * 20, img.shape[1] * 20)))
-	# waitKey()
+	imshow("image", resize(img (img.shape[0] * 20, img.shape[1] * 20)))
+	waitKey()
 	i += 1
 	imwrite(str(i) + ".png", img)
